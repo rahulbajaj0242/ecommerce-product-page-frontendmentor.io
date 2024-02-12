@@ -1,3 +1,4 @@
+import Nav from "@/components/Nav";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 
@@ -21,7 +22,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn("relative font-sans antialiased", inter.variable)}>
+      <body
+        className={cn(
+          "min-v-screen container relative  font-sans antialiased",
+          inter.variable,
+        )}
+      >
+        <Nav />
         {children}
       </body>
     </html>
