@@ -1,8 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { Menu, ShoppingCart } from "lucide-react";
+import { Menu, ShoppingCart, Trash2 } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -10,10 +12,15 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { Separator } from "./ui/separator";
+import { useCartItemsStore } from "@/store";
+import { Button } from "./ui/button";
 
 // type Props = {}
 
 export default function Nav() {
+  const cartItems = useCartItemsStore((state) => state.items);
+
   return (
     <nav className="flex items-center justify-between pt-6">
       <div className="flex items-center justify-center">
@@ -62,7 +69,39 @@ export default function Nav() {
           <PopoverTrigger>
             <ShoppingCart />
           </PopoverTrigger>
-          <PopoverContent>{/* TODO: Add shopping cart */}</PopoverContent>
+          <PopoverContent className="mr-5 mt-2 w-[350px]">
+            <h4>Cart</h4>
+            <Separator className="my-2" />
+            <div className="grid-row-2 grid space-y-2">
+              {cartItems === 0 ? (
+                <p className="text-center text-muted-foreground">
+                  Your cart is empty
+                </p>
+              ) : (
+                <>
+                  <div className="flex items-center space-x-4">
+                    <Image
+                      src={"/images/image-product-1-thumbnail.jpg"}
+                      width={40}
+                      height={40}
+                      alt="product thumbnail"
+                    ></Image>
+                    <div>
+                      <p>Fall Limited Edition Sneakers</p>
+                      <p className="text-muted-foreground">
+                        $125.00 x {cartItems}{" "}
+                        <span className="font-bold text-black">
+                          ${(cartItems * 125.0).toFixed(2)}
+                        </span>
+                      </p>
+                    </div>
+                    <Trash2></Trash2>
+                  </div>
+                  <Button className="w-full bg-orange">Checkout</Button>
+                </>
+              )}
+            </div>
+          </PopoverContent>
         </Popover>
         <Image
           src={"/images/image-avatar.png"}

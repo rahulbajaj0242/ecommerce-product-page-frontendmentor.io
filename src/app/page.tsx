@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button";
 import { Minus, Plus, ShoppingCart } from "lucide-react";
 
 import { useCartItemsStore } from "@/store";
-import { count } from "console";
+import { set } from "zod";
 
 type ImageType = {
   main: string;
@@ -57,9 +57,8 @@ const product = {
 export default function HomePage() {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(1);
-  const cartItems = useCartItemsStore((state) => state.items);
-  const add = useCartItemsStore((state) => state.add);
-  const remove = useCartItemsStore((state) => state.remove);
+  const [itemsSelected, setItemsSelected] = useState(0);
+  const setCartItems = useCartItemsStore((state) => state.setItems);
 
   useEffect(() => {
     if (!api) {
@@ -67,10 +66,6 @@ export default function HomePage() {
     }
 
     api.scrollTo(current);
-
-    // api.on("select", () => {
-    //   setCurrent(api.selectedScrollSnap() + 1);
-    // });
   }, [api, current]);
 
   const handleThumbnailClick = (
@@ -158,19 +153,30 @@ export default function HomePage() {
         <div className="flex flex-col gap-6 lg:flex-row lg:gap-4">
           <div className="flex w-fit items-center gap-6 rounded-md bg-slate-100 p-1">
             <Button
-              onClick={remove}
+              onClick={() => {
+                setItemsSelected(itemsSelected - 1);
+              }}
               variant="outline"
               size="icon"
-              disabled={cartItems === 0}
+              disabled={itemsSelected === 0}
             >
               <Minus className="h-4 w-4" />
             </Button>
-            <span>{cartItems}</span>
-            <Button onClick={add} variant="outline" size="icon">
+            <span>{itemsSelected}</span>
+            <Button
+              onClick={() => {
+                setItemsSelected(itemsSelected + 1);
+              }}
+              variant="outline"
+              size="icon"
+            >
               <Plus className="h-4 w-4" />
             </Button>
           </div>
-          <Button className=" bg-orange p-6 text-center text-lg font-bold lg:w-full">
+          <Button
+            onClick={() => setCartItems(itemsSelected)}
+            className=" bg-orange p-6 text-center text-lg font-bold lg:w-full"
+          >
             <ShoppingCart className="text-bold mr-4 h-5 w-5" /> Add to cart
           </Button>
         </div>
