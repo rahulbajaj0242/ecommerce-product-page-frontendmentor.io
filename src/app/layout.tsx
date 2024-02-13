@@ -1,4 +1,5 @@
 import Nav from "@/components/Nav";
+import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 
@@ -22,13 +23,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head></head>
       <body
         className={cn(
-          "min-v-screen container relative  font-sans antialiased",
+          "container relative min-h-screen  font-sans antialiased",
           inter.variable,
         )}
       >
         <Nav />
+        <Separator className="mt-8" />
         {children}
       </body>
     </html>
