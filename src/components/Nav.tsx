@@ -20,6 +20,7 @@ import { Button } from "./ui/button";
 
 export default function Nav() {
   const cartItems = useCartItemsStore((state) => state.items);
+  const setCartItems = useCartItemsStore((state) => state.setItems);
 
   return (
     <nav className="flex items-center justify-between pt-6">
@@ -33,7 +34,23 @@ export default function Nav() {
             <SheetContent side={"left"}>
               <SheetHeader>
                 <SheetDescription>
-                  {/*TODO: add side menu items */}
+                  <ul className="flex flex-col items-start space-y-6 pt-16 text-lg font-bold">
+                    <li>
+                      <Link href="/">Collections</Link>
+                    </li>
+                    <li>
+                      <Link href="/">Men</Link>
+                    </li>
+                    <li>
+                      <Link href="/">Women</Link>
+                    </li>
+                    <li>
+                      <Link href="/">About</Link>
+                    </li>
+                    <li>
+                      <Link href="/">Contact</Link>
+                    </li>
+                  </ul>
                 </SheetDescription>
               </SheetHeader>
             </SheetContent>
@@ -95,7 +112,15 @@ export default function Nav() {
                         </span>
                       </p>
                     </div>
-                    <Trash2></Trash2>
+                    <Button
+                      onClick={() => {
+                        setCartItems(0);
+                      }}
+                      variant={"ghost"}
+                      size={"icon"}
+                    >
+                      <Trash2></Trash2>
+                    </Button>
                   </div>
                   <Button className="w-full bg-orange">Checkout</Button>
                 </>
