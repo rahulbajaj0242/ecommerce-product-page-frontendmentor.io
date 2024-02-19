@@ -19,7 +19,6 @@ import { Button } from "@/components/ui/button";
 import { Minus, Plus, ShoppingCart } from "lucide-react";
 
 import { useCartItemsStore } from "@/store";
-import { set } from "zod";
 
 type ImageType = {
   main: string;
